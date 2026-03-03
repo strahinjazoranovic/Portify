@@ -13,25 +13,20 @@ import type { NavItem } from '@/types';
 
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Profile',
+        title: 'Profiel',
         href: edit(),
         icon: null,
     },
     {
-        title: 'Password',
+        title: 'Wachtwoord',
         href: editPassword(),
         icon: null,
     },
     {
-        title: 'Two-Factor Auth',
+        title: 'Twee-factor authenticatie',
         href: show(),
         icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: editAppearance(),
-        icon: null,
-    },
+    }
 ];
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
@@ -43,10 +38,10 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     }
 
     return (
-        <div className="px-4 py-6">
+        <div className="px-4 py-6 bg-card">
             <Heading
-                title="Settings"
-                description="Manage your profile and account settings"
+                title="Instellingen"
+                description="Beheer uw profiel en account instellingen"
             />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">
@@ -62,7 +57,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                                 variant="ghost"
                                 asChild
                                 className={cn('w-full justify-start', {
-                                    'bg-muted': isCurrentUrl(item.href),
+                                    'bg-text': isCurrentUrl(item.href),
                                 })}
                             >
                                 <Link href={item.href}>

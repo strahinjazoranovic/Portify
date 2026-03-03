@@ -23,14 +23,15 @@ export default function DeleteUser() {
         <div className="space-y-6">
             <Heading
                 variant="small"
-                title="Delete account"
-                description="Delete your account and all of its resources"
+                title="Verwijder account"
+                description="Verwijder uw account permenant en al zijn data"
             />
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
-                    <p className="font-medium">Warning</p>
-                    <p className="text-sm">
-                        Please proceed with caution, this cannot be undone.
+                    <p className="font-medium text-zinc-900">Waarschuwing</p>
+                    <p className="text-sm text-zinc-900">
+                        Ga voorzichtig te werk, deze actie kan niet ongedaan
+                        worden.
                     </p>
                 </div>
 
@@ -40,18 +41,18 @@ export default function DeleteUser() {
                             variant="destructive"
                             data-test="delete-user-button"
                         >
-                            Delete account
+                            Verwijder account
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogTitle>
-                            Are you sure you want to delete your account?
+                            Weet uw zeker dat u account wilt verwijderen?
                         </DialogTitle>
                         <DialogDescription>
-                            Once your account is deleted, all of its resources
-                            and data will also be permanently deleted. Please
-                            enter your password to confirm you would like to
-                            permanently delete your account.
+                            Zodra uw account is verwijderd, worden alle
+                            bijbehorende middelen en gegevens ook permanent
+                            verwijderd. Voer uw wachtwoord in om te bevestigen
+                            dat u uw account definitief wilt verwijderen.
                         </DialogDescription>
 
                         <Form
@@ -70,7 +71,7 @@ export default function DeleteUser() {
                                             htmlFor="password"
                                             className="sr-only"
                                         >
-                                            Password
+                                            Wachtwoord
                                         </Label>
 
                                         <Input
@@ -78,7 +79,7 @@ export default function DeleteUser() {
                                             type="password"
                                             name="password"
                                             ref={passwordInput}
-                                            placeholder="Password"
+                                            placeholder="Wachtwoord"
                                             autoComplete="current-password"
                                         />
 
@@ -93,7 +94,7 @@ export default function DeleteUser() {
                                                     resetAndClearErrors()
                                                 }
                                             >
-                                                Cancel
+                                                Annuleer
                                             </Button>
                                         </DialogClose>
 
@@ -106,7 +107,7 @@ export default function DeleteUser() {
                                                 type="submit"
                                                 data-test="confirm-delete-user-button"
                                             >
-                                                Delete account
+                                                Verwijder account
                                             </button>
                                         </Button>
                                     </DialogFooter>

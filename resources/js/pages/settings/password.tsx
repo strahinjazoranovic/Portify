@@ -14,7 +14,7 @@ import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Password settings',
+        title: 'Wachtwoord instellingen',
         href: edit().url,
     },
 ];
@@ -25,16 +25,16 @@ export default function Password() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Password settings" />
+            <Head title="Wachtwoord instellingen" />
 
-            <h1 className="sr-only">Password Settings</h1>
+            <h1 className="sr-only">Wachtwoord instellingen</h1>
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <Heading
                         variant="small"
-                        title="Update password"
-                        description="Ensure your account is using a long, random password to stay secure"
+                        title="Update wachtwoord"
+                        description="Zorg dat je account een lang, willekeurig wachtwoord gebruikt om veilig te blijven"
                     />
 
                     <Form
@@ -63,7 +63,7 @@ export default function Password() {
                             <>
                                 <div className="grid gap-2">
                                     <Label htmlFor="current_password">
-                                        Current password
+                                        Huidig wachtwoord
                                     </Label>
 
                                     <Input
@@ -73,7 +73,7 @@ export default function Password() {
                                         type="password"
                                         className="mt-1 block w-full"
                                         autoComplete="current-password"
-                                        placeholder="Current password"
+                                        placeholder="Huidig wachtwoord"
                                     />
 
                                     <InputError
@@ -101,7 +101,7 @@ export default function Password() {
 
                                 <div className="grid gap-2">
                                     <Label htmlFor="password_confirmation">
-                                        Confirm password
+                                        Bevestig wachtwoord
                                     </Label>
 
                                     <Input
@@ -110,7 +110,7 @@ export default function Password() {
                                         type="password"
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
-                                        placeholder="Confirm password"
+                                        placeholder="Bevestig wachtwoord"
                                     />
 
                                     <InputError
@@ -123,7 +123,7 @@ export default function Password() {
                                         disabled={processing}
                                         data-test="update-password-button"
                                     >
-                                        Save password
+                                        Sla nieuwe wachtwoord op
                                     </Button>
 
                                     <Transition

@@ -15,7 +15,7 @@ import type { BreadcrumbItem, SharedData } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Profile settings',
+        title: 'Profiel instellingen',
         href: edit().url,
     },
 ];
@@ -31,16 +31,16 @@ export default function Profile({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+            <Head title="Profiel instellingen" />
 
-            <h1 className="sr-only">Profile Settings</h1>
+            <h1 className="sr-only">Profile Instellingen</h1>
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <Heading
                         variant="small"
-                        title="Profile information"
-                        description="Update your name and email address"
+                        title="Profiel infomatie"
+                        description="Werk je naam of email adres bij"
                     />
 
                     <Form
@@ -123,7 +123,7 @@ export default function Profile({
                                         disabled={processing}
                                         data-test="update-profile-button"
                                     >
-                                        Save
+                                        Sla op
                                     </Button>
 
                                     <Transition
@@ -134,7 +134,7 @@ export default function Profile({
                                         leaveTo="opacity-0"
                                     >
                                         <p className="text-sm text-neutral-600">
-                                            Saved
+                                            Opgeslagen!
                                         </p>
                                     </Transition>
                                 </div>

@@ -24,8 +24,8 @@ export default function Login({
 }: Props) {
     return (
         <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
+            title="Login"
+            description="Vul uw gegevens in om in te loggen"
         >
             <Head title="Log in" />
 
@@ -36,7 +36,7 @@ export default function Login({
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-6">
+                        <div className="grid gap-5">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>
                                 <Input
@@ -47,21 +47,21 @@ export default function Login({
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="email"
-                                    placeholder="email@example.com"
+                                    placeholder="email@voorbeeld.com"
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label htmlFor="password">Wachtwoord</Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
-                                            className="ml-auto text-sm"
+                                            className="ml-auto text-sm text-zinc-600"
                                             tabIndex={5}
                                         >
-                                            Forgot password?
+                                            Wachtwoord vergeten?
                                         </TextLink>
                                     )}
                                 </div>
@@ -72,23 +72,23 @@ export default function Login({
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder="Wachtwoord"
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-2">
                                 <Checkbox
                                     id="remember"
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Label htmlFor="remember">Onthoud mij</Label>
                             </div>
 
                             <Button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className="w-full"
                                 tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
@@ -96,13 +96,31 @@ export default function Login({
                                 {processing && <Spinner />}
                                 Log in
                             </Button>
+
+                            <Button
+                                type="submit"
+                                className="w-full bg-zinc-200"
+                                tabIndex={5}
+                                disabled={processing}
+                                data-test="google-login-button"
+                            >
+                                {processing && <Spinner />}
+                                <div className="flex items-center justify-center gap-2">
+                                    <img
+                                        src="/icons/googleLogo.png"
+                                        className="h-5 w-5"
+                                        alt="Google Logo"
+                                    ></img>
+                                    Ga door met Google
+                                </div>
+                            </Button>
                         </div>
 
                         {canRegister && (
-                            <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
+                            <div className="text-center text-sm text-zinc-600">
+                                Heb uw nog geen account?{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    Sign up
+                                    Registreer
                                 </TextLink>
                             </div>
                         )}

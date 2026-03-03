@@ -13,10 +13,10 @@ import { email } from '@/routes/password';
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
         <AuthLayout
-            title="Forgot password"
-            description="Enter your email to receive a password reset link"
+            title="Vergeet wachtwoord"
+            description="Voer uw e-mailadres in om uw wachtwoord te resetten via een e-mail"
         >
-            <Head title="Forgot password" />
+            <Head title="Vergeet wachtwoord" />
 
             {status && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
@@ -36,7 +36,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                     name="email"
                                     autoComplete="off"
                                     autoFocus
-                                    placeholder="email@example.com"
+                                    placeholder="email@voorbeeld.com"
                                 />
 
                                 <InputError message={errors.email} />
@@ -51,15 +51,15 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                     {processing && (
                                         <LoaderCircle className="h-4 w-4 animate-spin" />
                                     )}
-                                    Email password reset link
+                                    Email wachtwoord reset link
                                 </Button>
                             </div>
                         </>
                     )}
                 </Form>
 
-                <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>Or, return to</span>
+                <div className="space-x-1 text-center text-sm text-zinc-600">
+                    <span>Of, ga terug naar</span>
                     <TextLink href={login()}>log in</TextLink>
                 </div>
             </div>
