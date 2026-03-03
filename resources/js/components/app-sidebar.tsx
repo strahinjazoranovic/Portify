@@ -39,8 +39,10 @@ export function AppSidebar() {
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <div className="flex items-center gap-2 p-2">
-                    <img src="logo.png" className="h-12 w-12"></img>
-                    {/* <h1 className="text-4xl font-extrabold text-zinc-900">Portify</h1> */}
+                    <img src="/logo.png" className="h-12 w-12"></img>
+                    <h1 className="text-3xl font-bold text-zinc-600">
+                        Por<span className="font-black text-accent">tify</span>
+                    </h1>
                 </div>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -63,8 +65,12 @@ export function AppSidebar() {
                     href={notificaties()}
                     prefetch
                 >
-                    <div className='flex h-12 w-12z items-center gap-2 rounded-sm px-3 py-2 text-md text-zinc-600 hover:bg-zinc-200'>
-                        <img src='/icons/notificationIcon.svg' className="h-6 w-6"></img>Notificaties
+                    <div className="text-md flex h-12 w-full items-center gap-2 rounded-sm p-2 text-zinc-600 hover:bg-zinc-200">
+                        <img
+                            src="/icons/notificationIcon.svg"
+                            className="h-6 w-6"
+                        ></img>
+                        Notificaties
                     </div>
                 </Link>
                 <Link
@@ -72,8 +78,12 @@ export function AppSidebar() {
                     href={edit()}
                     prefetch
                 >
-                    <div className='flex h-12 w-12z items-center gap-2 rounded-sm px-3 py-2 text-md text-zinc-600 hover:bg-zinc-200'>
-                        <img src='/icons/settingsIcon.svg' className="h-6 w-6"></img>Settings
+                    <div className="text-md flex h-12 w-full items-center gap-2 rounded-sm p-2 text-zinc-600 hover:bg-zinc-200">
+                        <img
+                            src="/icons/settingsIcon.svg"
+                            className="h-6 w-6"
+                        ></img>
+                        Settings
                     </div>
                 </Link>
 

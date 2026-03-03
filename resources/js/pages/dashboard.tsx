@@ -1,9 +1,11 @@
+import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
-import { useEffect } from 'react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
+import { UserName } from '@/components/user-name';
+import type { SharedData } from '@/types';
+import Background from '@/components/background';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -12,12 +14,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ user }: { user?: { name: string } }) {
-    useEffect(() => {
-        console.log('User object:', user);
-        console.log('User name:', user?.name);
-    }, [user]);
-
+export default function Dashboard() {
+    const { auth } = usePage<SharedData>().props;
     const getGreeting = () => {
         const hour = new Date().getHours();
 
@@ -29,11 +27,11 @@ export default function Dashboard({ user }: { user?: { name: string } }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <h1 className="text-2xl font-semibold text-zinc-600">
-                    {getGreeting()} {user?.name || 'Gebruiker'}
+            <Background>
+                <h1 className="text-4xl mt-4 font-medium text-zinc-600">
+                    {getGreeting()} <UserName user={auth.user} />
                 </h1>
-            </div>
+            </Background>
         </AppLayout>
     );
 }
