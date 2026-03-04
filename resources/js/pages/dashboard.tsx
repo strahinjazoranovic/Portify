@@ -1,11 +1,11 @@
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
+import Background from '@/components/background';
+import { UserName } from '@/components/user-name';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
-import { UserName } from '@/components/user-name';
 import type { SharedData } from '@/types';
-import Background from '@/components/background';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

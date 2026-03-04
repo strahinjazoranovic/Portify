@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
-import { NavFooter } from '@/components/nav-footer';
+import { edit } from '@/actions/App/Http/Controllers/Settings/PasswordController';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard, berichten, bestanden, notificaties } from '@/routes';
 import type { NavItem } from '@/types';
-import { edit } from '@/actions/App/Http/Controllers/Settings/PasswordController';
 
 const mainNavItems: NavItem[] = [
     {
