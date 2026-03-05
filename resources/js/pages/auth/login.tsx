@@ -98,19 +98,22 @@ export default function Login({
                             </Button>
 
                             <Button
-                                type="submit"
-                                className="w-full bg-zinc-200"
+                                type="button"
+                                className="w-full bg-zinc-200 text-zinc-600"
                                 tabIndex={5}
                                 disabled={processing}
                                 data-test="google-login-button"
+                                onClick={() =>
+                                    (window.location.href = '/auth/google')
+                                }
                             >
-                                {processing && <Spinner />}
                                 <div className="flex items-center justify-center gap-2">
                                     <img
                                         src="/icons/googleLogo.png"
                                         className="h-5 w-5"
                                         alt="Google Logo"
-                                    ></img>
+                                    />
+                                    {processing && <Spinner />}
                                     Ga door met Google
                                 </div>
                             </Button>
