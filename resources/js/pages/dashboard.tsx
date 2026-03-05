@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
 import { UserCardProject } from '@/components/user-card-project';
+import { UserCardDeadline } from '@/components/user-card-deadline';
 import { UserName } from '@/components/user-name';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -33,8 +34,10 @@ export default function Dashboard() {
                 <h1 className="mt-4 mb-2 text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
+                <UserCardDeadline/>
                 <UserCardProject />
             </Background>
         </AppLayout>
     );
 }
+    
