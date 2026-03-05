@@ -1,6 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
+import { UserCardProject } from '@/components/user-card-project';
 import { UserName } from '@/components/user-name';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -16,6 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Dashboard() {
     const { auth } = usePage<SharedData>().props;
+
     const getGreeting = () => {
         const hour = new Date().getHours();
 
@@ -28,9 +30,10 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <Background>
-                <h1 className="text-4xl mt-4 font-medium text-zinc-600">
+                <h1 className="mt-4 mb-2 text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
+                <UserCardProject />
             </Background>
         </AppLayout>
     );
