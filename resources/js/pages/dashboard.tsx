@@ -31,7 +31,7 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <Background>
-                <h1 className="mt-4 mb-2 text-4xl font-medium text-zinc-600">
+                <h1 className="text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
                 <UserCardDeadline/>
