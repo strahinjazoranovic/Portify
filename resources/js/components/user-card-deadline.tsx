@@ -12,19 +12,40 @@ type Project = {
 
 type NextDeadline = {
     name: string;
-    daysLeft: number;
+    timeLeft: number;
+    unit: 'days' | 'hours';
 };
 
-function getDaysUntilDeadline(deadline: string): number {
-    const today = new Date();
+function getTimeUntilDeadline(deadline: string): NextDeadline | null {
+    const now = new Date();
     const dueDate = new Date(deadline);
 
-    const diffTime = dueDate.getTime() - today.getTime();
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffMs = dueDate.getTime() - now.getTime();
+
+    if (diffMs < 0) return null;
+
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+    if (diffHours < 24) {
+        return {
+            name: '',
+            timeLeft: diffHours,
+            unit: 'hours',
+        };
+    }
+
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+    return {
+        name: '',
+        timeLeft: diffDays,
+        unit: 'days',
+    };
 }
 
 export function UserCardDeadline() {
     const [nextDeadline, setNextDeadline] = useState<NextDeadline | null>(null);
+    const [projectName, setProjectName] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -38,25 +59,35 @@ export function UserCardDeadline() {
 
                 const data: Project[] = await res.json();
 
-                // Find upcoming projects
-                const upcomingProjects = data
-                    .map((project) => ({
-                        name: project.name,
-                        daysLeft: getDaysUntilDeadline(project.deadline),
-                    }))
-                    .filter((project) => project.daysLeft >= 0);
+                const upcoming = data
+                    .map((project) => {
+                        const now = new Date();
+                        const deadline = new Date(project.deadline);
+                        const diff = deadline.getTime() - now.getTime();
 
-                if (upcomingProjects.length === 0) {
+                        return {
+                            name: project.name,
+                            deadline,
+                            diff,
+                        };
+                    })
+                    .filter((p) => p.diff >= 0);
+
+                if (upcoming.length === 0) {
                     setNextDeadline(null);
                     return;
                 }
 
-                // Find closest deadline
-                const closest = upcomingProjects.reduce((prev, current) =>
-                    current.daysLeft < prev.daysLeft ? current : prev,
+                const closest = upcoming.reduce((prev, current) =>
+                    current.diff < prev.diff ? current : prev,
                 );
 
-                setNextDeadline(closest);
+                const time = getTimeUntilDeadline(closest.deadline.toISOString());
+
+                if (time) {
+                    setNextDeadline(time);
+                    setProjectName(closest.name);
+                }
             } catch (err) {
                 console.error('Failed to fetch projects:', err);
             } finally {
@@ -67,34 +98,40 @@ export function UserCardDeadline() {
         fetchProjects();
     }, []);
 
+    const getUrgencyColor = () => {
+        if (!nextDeadline) return 'text-zinc-600';
+
+        if (nextDeadline.unit === 'hours') return 'text-red-500';
+        if (nextDeadline.timeLeft <= 2) return 'text-orange-500';
+
+        return 'text-zinc-600';
+    };
+
     return (
         <div className="w-[calc(50%-0.75rem)] max-w-2xl rounded-lg bg-white p-6 pt-8 pb-8 shadow-md">
             {loading ? (
-                // Skeleton Loader
-                <>
-                    {Array.from({ length: 1 }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="w-full max-w-2xl animate-pulse rounded-lg bg-white shadow-md"
-                        >
-                            <div className="flex items-start justify-between">
-                                <div className="h-7 w-full rounded bg-gray-300"></div>
-                            </div>
-                        </div>
-                    ))}
-                </>
-            ) : !nextDeadline ? (
+                <div className="animate-pulse">
+                    <div className="h-7 w-3/4 rounded bg-gray-300"></div>
+                </div>
+            ) : !nextDeadline || !projectName ? (
                 <h1 className="text-xl">No upcoming deadlines</h1>
-            ) : nextDeadline.daysLeft === 0 ? (
-                <h1 className="text-xl">
-                    Next deadline: {nextDeadline.name} is due{' '}
-                    <span className="font-bold text-zinc-600">today</span>
+            ) : nextDeadline.timeLeft === 0 ? (
+                <h1 className="text-xl font-semibold">
+                    Next deadline: {projectName} is due{' '}
+                    <span className="font-bold text-red-500">now</span>
                 </h1>
             ) : (
                 <h1 className="text-xl font-semibold">
-                    Next deadline: {nextDeadline.name} in{' '}
-                    <span className="font-bold text-zinc-600">
-                        {nextDeadline.daysLeft} days
+                    Next deadline: {projectName} in{' '}
+                    <span className={`font-bold ${getUrgencyColor()}`}>
+                        {nextDeadline.timeLeft}{' '}
+                        {nextDeadline.unit === 'hours'
+                            ? nextDeadline.timeLeft === 1
+                                ? 'hour'
+                                : 'hours'
+                            : nextDeadline.timeLeft === 1
+                            ? 'day'
+                            : 'days'}
                     </span>
                 </h1>
             )}

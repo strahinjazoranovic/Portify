@@ -27,10 +27,10 @@ export default function Welcome({
                 </div>
                 <div className="flex w-1/2 pb-8 flex-col items-center justify-center gap-4 border-l-3 border-zinc-600 bg-card">
                     <div className="">
-                        <h1 className="text-8xl font-extrabold text-[#1b1b18]">
+                        <h1 className="text-8xl overflow-hidden font-extrabold text-[#1b1b18]">
                             Portify
                         </h1>
-                        <p className="mt-2 mb-2 text-3xl text-[#1b1b18]">
+                        <p className="mb-2 text-3xl text-[#1b1b18]">
                             Jouw project, altijd inzichtelijk
                         </p>
                         {auth.user ? (

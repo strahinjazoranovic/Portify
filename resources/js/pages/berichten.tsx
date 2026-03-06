@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
 import AppLayout from '@/layouts/app-layout';
+import { UserCardMessage } from '@/components/user-card-message';
 import { berichten } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
@@ -16,7 +17,7 @@ export default function Berichten() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Berichten" />
             <Background>
-                <div></div>
+                <UserCardMessage />
             </Background>
         </AppLayout>
     );
