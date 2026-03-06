@@ -1,8 +1,8 @@
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
-import { UserCardProject } from '@/components/user-card-project';
 import { UserCardDeadline } from '@/components/user-card-deadline';
+import { UserCardProject } from '@/components/user-card-project';
 import { UserName } from '@/components/user-name';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';

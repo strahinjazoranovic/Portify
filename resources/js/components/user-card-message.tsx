@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-type Messages = {
-    id: number;
-    messages: string;
-    is_read: boolean;
-};
+// type Messages = {
+//     id: number;
+//     messages: string;
+//     is_read: boolean;
+// };
 
 export function UserCardMessage() {
-    const [messages, setMessages] = useState<Messages[]>([]);
-    const [loading, setLoading] = useState(true);
+    // const [messages, setMessages] = useState<Messages[]>([]);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const res = await fetch('/messages');
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         try {
+    //             const res = await fetch('/messages');
 
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
+    //             if (!res.ok) {
+    //                 throw new Error(`HTTP error! status: ${res.status}`);
+    //             }
 
-                const data: Messages[] = await res.json();
-                setMessages(data);
-                console.log('Fetched messages:', data);
-            } catch (err) {
-                console.error('Failed to fetch messages:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             const data: Messages[] = await res.json();
+    //             setMessages(data);
+    //             console.log('Fetched messages:', data);
+    //         } catch (err) {
+    //             console.error('Failed to fetch messages:', err);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchMessages();
-    }, []);
+    //     fetchMessages();
+    // }, []);
 
     return (
         <div></div>

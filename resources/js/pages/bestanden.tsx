@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
-import AppLayout from '@/layouts/app-layout';
 import { UserCardFile } from '@/components/user-card-file';
+import AppLayout from '@/layouts/app-layout';
 import { bestanden } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
