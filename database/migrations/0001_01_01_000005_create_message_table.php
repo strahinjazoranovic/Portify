@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id(); // bigint(20) primary key
-            $table->string('name', 100);
-            $table->enum('status', ['Not started', 'In development', 'In testing', 'Finished']);
-            $table->text('description');
-            $table->date('deadline');
-            $table->integer('progress');
-            // $table->integer('user_id')->nullable();
+            $table->text('messages', 100);
+            $table->tinyint('is_read');
             $table->timestamps(); // created_at and updated_at
-            $table->string('logo', 100)->nullable();
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('messages');
     }
-};
+};  

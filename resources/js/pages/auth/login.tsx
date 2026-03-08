@@ -10,6 +10,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
+import { useState } from 'react';
 
 type Props = {
     status?: string;
@@ -22,6 +23,8 @@ export default function Login({
     canResetPassword,
     canRegister,
 }: Props) {
+    const [googleLoading, setGoogleLoading] = useState(false);
+
     return (
         <AuthLayout
             title="Login"
@@ -100,20 +103,19 @@ export default function Login({
                             <Button
                                 type="button"
                                 className="w-full bg-zinc-200 text-zinc-600"
-                                tabIndex={5}
-                                disabled={processing}
-                                data-test="google-login-button"
-                                onClick={() =>
-                                    (window.location.href = '/auth/google')
-                                }
+                                disabled={processing || googleLoading}
+                                onClick={() => {
+                                    setGoogleLoading(true);
+                                    window.location.href = '/auth/google';
+                                }}
                             >
                                 <div className="flex items-center justify-center gap-2">
+                                    {googleLoading && <Spinner />}
                                     <img
                                         src="/icons/googleLogo.png"
                                         className="h-5 w-5"
                                         alt="Google Logo"
                                     />
-                                    {processing && <Spinner />}
                                     Ga door met Google
                                 </div>
                             </Button>
