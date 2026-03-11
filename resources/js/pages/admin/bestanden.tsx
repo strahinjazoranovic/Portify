@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
+import { AdminCardFile } from '@/components/admin/admin-card-file';
 import Background from '@/components/background';
-import { UserCardFile } from '@/components/user/user-card-file';
 import AppLayout from '@/layouts/app-layout';
 import { bestanden } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
@@ -17,7 +17,7 @@ export default function Bestanden() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Bestanden" />
             <Background>
-                <UserCardFile />
+                <AdminCardFile />
             </Background>
         </AppLayout>
     );

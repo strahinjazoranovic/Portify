@@ -1,8 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
+import { AdminCardProject } from '@/components/admin/admin-card-project';
 import Background from '@/components/background';
-import { UserCardDeadline } from '@/components/user/user-card-deadline';
-import { UserCardProject } from '@/components/user/user-card-project';
 import { UserName } from '@/components/user/user-name';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -11,7 +10,7 @@ import type { SharedData } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Admin dashboard',
         href: dashboard().url,
     },
 ];
@@ -19,7 +18,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Dashboard() {
     const { auth } = usePage<SharedData>().props;
 
-    const getGreeting = () => {
+    const getGreeting = () => { 
         const hour = new Date().getHours();
 
         if (hour >= 6 && hour < 12) return 'Goeiemorgen';
@@ -34,8 +33,7 @@ export default function Dashboard() {
                 <h1 className="text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
-                <UserCardDeadline/>
-                <UserCardProject />
+                <AdminCardProject />
             </Background>
         </AppLayout>
     );

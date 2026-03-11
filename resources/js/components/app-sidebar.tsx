@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
 import { edit } from '@/actions/App/Http/Controllers/Settings/PasswordController';
 import { NavMain } from '@/components/nav-main';
@@ -13,27 +13,49 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard, berichten, bestanden, notificaties } from '@/routes';
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Berichten',
-        href: berichten(),
-        icon: BookOpen,
-    },
-    {
-        title: 'Bestanden',
-        href: bestanden(),
-        icon: Folder,
-    },
-];
+import type { NavItem, SharedData } from '@/types';
 
 export function AppSidebar() {
+    const { auth } = usePage<SharedData>().props;
+    const isAdmin = auth.user.role === 'admin';
+
+    const mainNavItems: NavItem[] = isAdmin
+        ? [
+              {
+                  title: 'Dashboard',
+                  href: '/admin/dashboard',
+                  icon: LayoutGrid,
+              },
+              {
+                  title: 'Berichten',
+                  href: '/admin/berichten',
+                  icon: BookOpen,
+              },
+              {
+                  title: 'Bestanden',
+                  href: '/admin/bestanden',
+                  icon: Folder,
+              },
+          ]
+        : [
+              {
+                  title: 'Dashboard',
+                  href: dashboard(),
+                  icon: LayoutGrid,
+              },
+              {
+                  title: 'Berichten',
+                  href: berichten(),
+                  icon: BookOpen,
+              },
+              {
+                  title: 'Bestanden',
+                  href: bestanden(),
+                  icon: Folder,
+              },
+          ];
+
+    const notificationsHref = isAdmin ? '/admin/notificaties' : notificaties();
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -61,7 +83,7 @@ export function AppSidebar() {
             <SidebarFooter>
                 <Link
                     className="block w-full cursor-pointer"
-                    href={notificaties()}
+                    href={notificationsHref}
                     prefetch
                 >
                     <div className="text-md flex h-12 w-full items-center gap-2 rounded-sm p-2 text-zinc-600 hover:bg-zinc-200">

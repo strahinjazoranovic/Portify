@@ -1,23 +1,22 @@
 import { Head } from '@inertiajs/react';
 import Background from '@/components/background';
-import { UserCardFile } from '@/components/user/user-card-file';
 import AppLayout from '@/layouts/app-layout';
-import { bestanden } from '@/routes';
+import { notificaties } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Bestanden',
-        href: bestanden().url,
+        title: 'Notificaties',
+        href: notificaties().url,
     },
 ];
 
-export default function Bestanden() {
+export default function Notificaties() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Bestanden" />
+            <Head title="Notificaties" />
             <Background>
-                <UserCardFile />
+                <div></div>
             </Background>
         </AppLayout>
     );

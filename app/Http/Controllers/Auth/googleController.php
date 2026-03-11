@@ -59,6 +59,9 @@ class GoogleController extends Controller
     \Log::info('User logged in', ['user_id' => $user->id]);
 
     Auth::login($user, true);
+    if ($user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
 
     return redirect()->intended('/dashboard');
 }

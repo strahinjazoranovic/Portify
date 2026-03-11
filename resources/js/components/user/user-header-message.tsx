@@ -1,7 +1,8 @@
 // import { useEffect, useState } from 'react';
+// import { usePage } from '@inertiajs/react';
+// import type { SharedData } from '@/types';
 import { Button } from '@/components/ui/button';
-import { usePage } from '@inertiajs/react';
-import type { SharedData } from '@/types';
+
 
 // type Messages = {
 //     id: number;
@@ -12,7 +13,7 @@ import type { SharedData } from '@/types';
 export function UserHeaderMessage() {
     // const [messages, setMessages] = useState<Messages[]>([]);
     // const [loading, setLoading] = useState(true);
-    const { auth } = usePage<SharedData>().props;
+    // const { auth } = usePage<SharedData>().props;
 
     // useEffect(() => {
     //     const fetchMessages = async () => {
