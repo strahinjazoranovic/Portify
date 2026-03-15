@@ -6,6 +6,7 @@ type Project = {
     status: string;
     description: string;
     deadline: string;
+    user_id?: string;
     progress: number;
     logo: string;
 };
@@ -16,6 +17,7 @@ type NextDeadline = {
     unit: 'days' | 'hours';
 };
 
+// Function to get time until deadline in days and hours
 function getTimeUntilDeadline(deadline: string): NextDeadline | null {
     const now = new Date();
     const dueDate = new Date(deadline);
@@ -73,6 +75,7 @@ export function UserCardDeadline() {
                     })
                     .filter((p) => p.diff >= 0);
 
+                // If the upcoming deadline is empty set next deadline
                 if (upcoming.length === 0) {
                     setNextDeadline(null);
                     return;
@@ -82,7 +85,10 @@ export function UserCardDeadline() {
                     current.diff < prev.diff ? current : prev,
                 );
 
-                const time = getTimeUntilDeadline(closest.deadline.toISOString());
+                // Show time until the closest deadline
+                const time = getTimeUntilDeadline(
+                    closest.deadline.toISOString(),
+                );
 
                 if (time) {
                     setNextDeadline(time);
@@ -98,6 +104,8 @@ export function UserCardDeadline() {
         fetchProjects();
     }, []);
 
+    /* If statement that returns different color text if time until 
+    next deadline is in hours or if there is only less than 2 hours left */
     const getUrgencyColor = () => {
         if (!nextDeadline) return 'text-zinc-600';
 
@@ -109,18 +117,22 @@ export function UserCardDeadline() {
 
     return (
         <div className="w-[calc(50%-0.75rem)] max-w-2xl rounded-lg bg-white p-6 pt-8 pb-8 shadow-md">
+            {/* Loading template for when deadlines get fetched from the database */}
             {loading ? (
                 <div className="animate-pulse">
                     <div className="h-7 w-3/4 rounded bg-gray-300"></div>
                 </div>
-            ) : !nextDeadline || !projectName ? (
+            ) : // If there is no upcoming deadline show this text
+            !nextDeadline || !projectName ? (
                 <h1 className="text-xl">No upcoming deadlines</h1>
-            ) : nextDeadline.timeLeft === 0 ? (
+            ) : // If there is a deadline due right now show this
+            nextDeadline.timeLeft === 0 ? (
                 <h1 className="text-xl font-semibold">
                     Next deadline: {projectName} is due{' '}
                     <span className="font-bold text-red-500">now</span>
                 </h1>
             ) : (
+                // Display the next deadline with time left
                 <h1 className="text-xl font-semibold">
                     Next deadline: {projectName} in{' '}
                     <span className={`font-bold ${getUrgencyColor()}`}>
@@ -130,8 +142,8 @@ export function UserCardDeadline() {
                                 ? 'hour'
                                 : 'hours'
                             : nextDeadline.timeLeft === 1
-                            ? 'day'
-                            : 'days'}
+                              ? 'day'
+                              : 'days'}
                     </span>
                 </h1>
             )}

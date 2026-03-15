@@ -1,6 +1,8 @@
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 import { AdminCardProject } from '@/components/admin/admin-card-project';
+import { AdminModalProjectAdd } from '@/components/admin/admin-modal-projectAdd';
 import Background from '@/components/background';
 import { UserName } from '@/components/user/user-name';
 import AppLayout from '@/layouts/app-layout';
@@ -17,8 +19,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Dashboard() {
     const { auth } = usePage<SharedData>().props;
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const getGreeting = () => { 
+    // Create a greeting based on the time of the day
+    const getGreeting = () => {
         const hour = new Date().getHours();
 
         if (hour >= 6 && hour < 12) return 'Goeiemorgen';
@@ -33,9 +37,12 @@ export default function Dashboard() {
                 <h1 className="text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
-                <AdminCardProject />
+                <AdminCardProject onOpenModal={() => setIsModalOpen(true)} />
+                <AdminModalProjectAdd
+                    open={isModalOpen}
+                    onOpenChange={setIsModalOpen}
+                />
             </Background>
         </AppLayout>
     );
 }
-    

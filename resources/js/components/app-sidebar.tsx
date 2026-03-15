@@ -17,7 +17,7 @@ import type { NavItem, SharedData } from '@/types';
 
 export function AppSidebar() {
     const { auth } = usePage<SharedData>().props;
-    const isAdmin = auth.user.role === 'admin';
+    const isAdmin = auth.user.role === 'Admin';
 
     const mainNavItems: NavItem[] = isAdmin
         ? [

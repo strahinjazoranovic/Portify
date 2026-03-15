@@ -12,7 +12,8 @@ class AdminMiddleware
     {
         $user = $request->user();
 
-        if (! $user || $user->role !== 'admin') {
+        // If the user isn't admin and he tries to access /admin/dashboard he will get an 403 error
+        if (! $user || $user->role !== 'Admin') {
             abort(403);
         }
 

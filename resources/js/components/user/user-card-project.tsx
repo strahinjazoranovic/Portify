@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 
+// Define Project
 type Project = {
     id: number;
     name: string;
     status: string;
     description: string;
     deadline: string;
+    user_id?: string;
     progress: number;
     logo: string;
 };
@@ -43,6 +45,7 @@ export function UserCardProject() {
         fetchProjects();
     }, []);
 
+    // Format deadline in days and hours
     const formatDeadline = (deadlineString: string) => {
         const now = new Date();
         const deadline = new Date(deadlineString);
@@ -61,6 +64,7 @@ export function UserCardProject() {
         return deadline.toLocaleDateString();
     };
 
+    // If the time is lower than a certain value red text color gets shown
     const getDeadlineColor = (project: Project) => {
         const now = new Date();
         const deadline = new Date(project.deadline);
@@ -69,18 +73,17 @@ export function UserCardProject() {
         const status = getStatus(project);
 
         if (diff < 0) {
-            return status === 'Finished'
-                ? 'font-semibold text-green-600'
-                : 'font-semibold text-red-500';
+            return status === 'Finished' ? 'text-green-600' : 'text-red-500';
         }
 
         if (diff < 86400000) {
-            return 'font-semibold text-orange-500';
+            return 'text-orange-500';
         }
 
-        return 'text-gray-600';
+        return 'text-zinc-600';
     };
 
+    // Show status and if the deadline is missed + project.progress is less than 100 show missed project.status
     const getStatus = (project: Project) => {
         const now = new Date();
         const deadline = new Date(project.deadline);
@@ -94,6 +97,7 @@ export function UserCardProject() {
 
     return (
         <div className="mt-2 flex flex-wrap justify-center gap-6">
+            {/* Loading template for when projects get fetched from the database */}
             {loading ? (
                 Array.from({ length: 4 }).map((_, index) => (
                     <div
@@ -125,11 +129,13 @@ export function UserCardProject() {
                         </div>
                     </div>
                 ))
-            ) : projects.length === 0 ? (
+            ) : // If projects array is empty show this
+            projects.length === 0 ? (
                 <h1 className="text-center text-xl">
                     No active projects found
                 </h1>
             ) : (
+                // Render a card for each project in the projects array
                 projects.map((project) => {
                     const status = getStatus(project);
 
@@ -153,32 +159,35 @@ export function UserCardProject() {
                                         {project.name}
                                     </h1>
 
-                                    <div className="text-right">
-                                        <p
-                                            className={`text-sm ${getDeadlineColor(project)}`}
-                                        >
+                                    <p
+                                        className={`text-md ${getDeadlineColor(project)}`}
+                                    >
+                                        <span className="text-md text-zinc-600">
                                             Deadline:{' '}
-                                            {formatDeadline(project.deadline)}
-                                        </p>
-                                    </div>
+                                        </span>
+                                        {formatDeadline(project.deadline)}
+                                    </p>
                                 </div>
 
                                 <h1 className="mt-2">{project.description}</h1>
 
                                 <div className="mt-4">
                                     <div className="flex justify-between">
-                                        <p className="mb-1 text-sm text-zinc-700">
+                                        <p className="text-md mb-1 text-zinc-600">
                                             Progress: {project.progress}%
                                         </p>
 
                                         <p
-                                            className={`text-sm font-semibold ${
+                                            className={`text-md ${
                                                 status === 'Missed'
                                                     ? 'text-red-500'
                                                     : 'text-green-600'
                                             }`}
                                         >
-                                            Status: {status}
+                                            <span className="text-md text-zinc-600">
+                                                Status:{' '}
+                                            </span>
+                                            {status}
                                         </p>
                                     </div>
 

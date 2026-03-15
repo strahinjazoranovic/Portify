@@ -36,8 +36,8 @@ export function UserCardFile() {
 
     return (
         <div className="mt-2 flex flex-wrap gap-6">
+            {/* Loading template for when files get fetched from the database */}
             {loading ? (
-                // Skeleton Loader
                 Array.from({ length: 3 }).map((_, index) => (
                     <div
                         key={index}
@@ -57,9 +57,11 @@ export function UserCardFile() {
                         </div>
                     </div>
                 ))
-            ) : files.length === 0 ? (
+            ) : // Show message if there is no files
+            files.length === 0 ? (
                 <h1 className="text-center text-xl">No active files found</h1>
             ) : (
+                // Render a card for each file in the files array
                 files.map((file) => (
                     <div
                         key={file.id}

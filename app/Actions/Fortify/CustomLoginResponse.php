@@ -11,10 +11,12 @@ class CustomLoginResponse implements LoginResponseContract
     {
         $user = $request->user();
 
-        if ($user->role === 'admin') {
+        // Roles with user get sent to normal dashboard
+        if ($user->role === 'User') {
+            return redirect()->route('dashboard');
+        // Roles with admin get sent to admin dashboard
+        } else if ($user->role === 'Admin') {
             return redirect()->route('admin.dashboard');
         }
-
-        return redirect()->intended('/dashboard');
     }
 }
