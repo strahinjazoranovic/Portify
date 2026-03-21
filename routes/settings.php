@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\UserProjectController;
@@ -26,17 +25,17 @@ Route::middleware('auth')->group(function () {
         // Routes for projects
         Route::get('/projects', [UserProjectController::class, 'index']);
         Route::post('/projects', [UserProjectController::class, 'store']);
-        Route::get('/projects/{project}/edit', [UserProjectController::class, 'edit']);
         Route::put('/projects/{project}', [UserProjectController::class, 'update']);
-        
+        Route::delete('/projects/{project}', [UserProjectController::class, 'destroy']);
+                
         // Routes for mesesages
         Route::get('/messages', [UserMessageController::class, 'index']);
 
         // Routes for files
         Route::get('/files', [UserFileController::class, 'index']);
         Route::post('/files', [UserFileController::class, 'store']);
-        Route::get('/files/{file}/edit', [UserFileController::class, 'edit']);
         Route::put('/files/{file}', [UserFileController::class, 'update']);
+        Route::delete('/files/{file}', [UserFileController::class, 'destroy']);
 
         // Route for users
         Route::get('/users', [UserController::class, 'index']);

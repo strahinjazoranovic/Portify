@@ -104,20 +104,20 @@ export function UserCardProject() {
                         key={index}
                         className="w-[calc(50%-0.75rem)] max-w-2xl animate-pulse rounded-lg bg-white shadow-md"
                     >
-                        <div className="flex h-53 justify-center p-6">
-                            <div className="h-40 w-40 rounded-full bg-gray-300"></div>
+                        <div className="flex h-80 justify-center">
+                            <div className="h-full w-full rounded-t-xl bg-gray-300"></div>
                         </div>
 
                         <div className="border-t border-zinc-200 p-6">
                             <div className="flex items-start justify-between">
                                 <div className="h-8 w-40 rounded-lg bg-gray-300"></div>
-                                <div className="h-4 w-24 rounded-lg bg-gray-300"></div>
+                                <div className="h-4 w-32 rounded-lg bg-gray-300"></div>
                             </div>
 
                             <div className="mt-4">
-                                <div className="mb-2 h-4 w-32 rounded-lg bg-gray-300"></div>
+                                <div className="mb-2 h-6 w-32 rounded-lg bg-gray-300"></div>
 
-                                <div className="flex items-start justify-between">
+                                <div className="mt-4 flex items-start justify-between">
                                     <div className="mb-2 h-4 w-32 rounded-lg bg-gray-300"></div>
                                     <div className="mb-2 h-4 w-24 rounded-lg bg-gray-300"></div>
                                 </div>
@@ -129,10 +129,10 @@ export function UserCardProject() {
                         </div>
                     </div>
                 ))
-            ) : // If projects array is empty show this
-            projects.length === 0 ? (
-                <h1 className="text-center text-xl">
-                    No active projects found
+            ) : // If projects array is empty show this text
+            projects.length === 0 ? ( 
+                <h1 className="text-center text-3xl font-bold">
+                    No projects found
                 </h1>
             ) : (
                 // Render a card for each project in the projects array
@@ -144,11 +144,12 @@ export function UserCardProject() {
                             key={project.id}
                             className="w-[calc(50%-0.75rem)] max-w-2xl rounded-lg bg-white shadow-md"
                         >
-                            <div className="flex h-50 justify-center p-6">
+                            <div className="flex h-80 justify-center">
                                 {project.logo && (
                                     <img
                                         src={project.logo}
                                         alt={project.name}
+                                        className="object-cover/90 h-full w-full rounded-t-xl"
                                     />
                                 )}
                             </div>
@@ -169,12 +170,14 @@ export function UserCardProject() {
                                     </p>
                                 </div>
 
-                                <h1 className="mt-2">{project.description}</h1>
+                                <h1 className="mt-2 text-zinc-500">
+                                    {project.description}
+                                </h1>
 
                                 <div className="mt-4">
                                     <div className="flex justify-between">
                                         <p className="text-md mb-1 text-zinc-600">
-                                            Progress: {project.progress}%
+                                            Voortgang: {project.progress}%
                                         </p>
 
                                         <p

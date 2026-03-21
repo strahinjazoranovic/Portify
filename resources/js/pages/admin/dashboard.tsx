@@ -2,7 +2,7 @@ import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { AdminCardProject } from '@/components/admin/admin-card-project';
-import { AdminModalProjectAdd } from '@/components/admin/admin-modal-projectAdd';
+import { AdminModalProjectActions } from '@/components/admin/admin-modal-projectActions';
 import Background from '@/components/background';
 import { UserName } from '@/components/user/user-name';
 import AppLayout from '@/layouts/app-layout';
@@ -17,9 +17,24 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+// Define Project
+type Project = {
+    id: number;
+    name: string;
+    status: string;
+    description: string;
+    deadline: string;
+    user_id?: string;
+    progress: number;
+    logo: string;
+};
+
 export default function Dashboard() {
     const { auth } = usePage<SharedData>().props;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(
+        null,
+    );
 
     // Create a greeting based on the time of the day
     const getGreeting = () => {
@@ -37,10 +52,21 @@ export default function Dashboard() {
                 <h1 className="text-4xl font-medium text-zinc-600">
                     {getGreeting()} <UserName user={auth.user} />
                 </h1>
-                <AdminCardProject onOpenModal={() => setIsModalOpen(true)} />
-                <AdminModalProjectAdd
+                <AdminCardProject
+                    onOpenModal={() => {
+                        setSelectedProject(null);
+                        setIsModalOpen(true);
+                    }}
+                    onEditProject={(project) => {
+                        setSelectedProject(project);
+                        setIsModalOpen(true);
+                    }}
+                />
+
+                <AdminModalProjectActions
                     open={isModalOpen}
                     onOpenChange={setIsModalOpen}
+                    project={selectedProject}
                 />
             </Background>
         </AppLayout>

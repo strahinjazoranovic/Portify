@@ -8,6 +8,7 @@ class UserMessageController extends Controller
 {
     public function index()
     {
+        // Return all messages form the database
         $messages = UserMessage::all();
         return response()->json($messages);
     }

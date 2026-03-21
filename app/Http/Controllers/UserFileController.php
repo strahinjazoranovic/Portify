@@ -13,13 +13,14 @@ class UserFileController extends Controller
         return response()->json($files);
     }
  
+    // Store files
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name'        => 'required|string|max:100',
             'description' => 'required|string',
             'user_id'     => 'nullable|exists:users,id',
-            // Let users upload all files with max 10MB size
+            // Let users store files with max 10MB size
             'path' => 'nullable|file|max:10240',
         ]);
 
@@ -32,5 +33,49 @@ class UserFileController extends Controller
         $file = UserFile::create($validated);
 
         return response()->json($file, 201);
+    }
+
+    // Update files
+    public function update(Request $request, $file)
+    {
+        $file = UserFile::findOrFail($file);
+
+        $validated = $request->validate([
+            'name'        => 'required|string|max:100',
+            'description' => 'required|string',
+            'user_id'     => 'nullable|exists:users,id',
+            'path'        => 'nullable|file|max:10240',
+        ]);
+
+        // If new file uploaded → delete old one first
+        if ($request->hasFile('path')) {
+            if ($file->path) {
+                $oldPath = str_replace('/storage/', '', $file->path);
+                Storage::disk('public')->delete($oldPath);
+            }
+
+            $path = $request->file('path')->store('path', 'public');
+            $validated['path'] = Storage::url($path);
+        }
+
+        $file->update($validated);
+
+        return response()->json($file);
+    }
+
+    // Destroy/delete an file
+    public function destroy($file)
+    {
+        $file = UserFile::findOrFail($file);
+
+        // Delete stored file if it exists in storage
+        if ($file->path) {
+            $path = str_replace('/storage/', '', $file->path);
+            Storage::disk('public')->delete($path);
+        }
+
+        $file->delete();
+
+        return response()->json(['message' => 'File deleted successfully']);
     }
 }

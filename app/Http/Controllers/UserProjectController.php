@@ -13,6 +13,7 @@ class UserProjectController extends Controller
         return response()->json($projects);
     }
 
+    // Store/create an project
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -35,7 +36,41 @@ class UserProjectController extends Controller
         $validated['progress'] = $validated['progress'] ?? 0;
 
         $project = UserProject::create($validated);
+    }
 
-        return response()->json($project, 201);
+    // Update projects
+    public function update(Request $request, $project)
+    {
+        $project = UserProject::findOrFail($project);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'deadline' => 'required|date',
+            'status' => 'required|string',
+            'user_id' => 'nullable|exists:users,id',
+            'logo' => 'nullable|image|max:2048',
+            'progress' => 'integer|min:0|max:100',
+        ]);
+
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('logos', 'public');
+            $validated['logo'] = Storage::url($path);
+        }
+
+        $project->update($validated);
+    }
+
+    // Public function for destroying(deleting) an project
+    public function destroy($project)
+    {
+        $project = UserProject::findOrFail($project);
+
+        if ($project->logo) {
+            $path = str_replace('/storage/', '', $project->logo);
+            Storage::disk('public')->delete($path);
+        }
+
+        $project->delete();
     }
 }

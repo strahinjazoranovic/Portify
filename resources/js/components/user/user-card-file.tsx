@@ -57,9 +57,11 @@ export function UserCardFile() {
                         </div>
                     </div>
                 ))
-            ) : // Show message if there is no files
+            ) : // If files array is empty show this text
             files.length === 0 ? (
-                <h1 className="text-center text-xl">No active files found</h1>
+                <h1 className="text-center text-3xl font-bold">
+                    No files found
+                </h1>
             ) : (
                 // Render a card for each file in the files array
                 files.map((file) => (
@@ -80,7 +82,9 @@ export function UserCardFile() {
                                 </div>
                             </div>
 
-                            <h1 className="mt-2">{file.description}</h1>
+                            <h1 className="mt-2 text-zinc-500">
+                                {file.description}
+                            </h1>
                         </div>
                         <a href={file.path} download>
                             <Button className="mt-4 w-full">Download</Button>
