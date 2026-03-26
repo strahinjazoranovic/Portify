@@ -5,24 +5,22 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\Auth\GoogleController;
 
-
-// Public Routes
+// Public Routes that are accesible to everyone
 Route::get('/', function () {
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
 
-// Google OAuth Login
+// Google OAuth Login routes
 Route::prefix('auth')->group(function () {
     Route::get('/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 });
 
-// Protected user routes
+// Protected user routes for all user pages
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Regular User Dashboard
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
@@ -40,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('notificaties');
 });
 
-// Protected admin routes
+// Protected admin routes for all admin pages
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return Inertia::render('admin/dashboard');

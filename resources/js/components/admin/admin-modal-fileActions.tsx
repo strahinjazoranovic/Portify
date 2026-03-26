@@ -71,6 +71,7 @@ export function AdminModalFileActions({
         setPath(null);
     };
 
+    // Handle when the user submits
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitting(true);
@@ -87,6 +88,7 @@ export function AdminModalFileActions({
             formData.append('path', path);
         }
 
+        // If the modal is in edit mode use method put and change the notification message
         try {
             if (isEditing && file) {
                 await axios.post(`/files/${file.id}?_method=PUT`, formData, {
@@ -97,6 +99,7 @@ export function AdminModalFileActions({
                     type: 'success',
                     message: 'Bestand succesvol aangepast!',
                 });
+            // If the modal isn't in edit mode post in /files with the form data with differenct notification message 
             } else {
                 await axios.post('/files', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
@@ -108,6 +111,7 @@ export function AdminModalFileActions({
                 });
             }
 
+            // Set an timeout for 1 second
             setTimeout(() => {
                 onOpenChange(false);
             }, 1000);

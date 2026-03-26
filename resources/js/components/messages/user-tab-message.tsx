@@ -1,5 +1,5 @@
 // import { useEffect, useState } from 'react';
-import UserTabCardMessage from '@/components/user/user-tabCard-message';
+import UserTabCardMessage from '@/components/messages/user-tabCard-message';
 
 // type Messages = {
 //     id: number;

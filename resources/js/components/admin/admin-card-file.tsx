@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
 
+// Define Files
 type Files = {
     id: number;
     name: string;
@@ -21,6 +22,7 @@ export function AdminCardFile({
     const [openMenuId, setOpenMenuId] = useState<number | null>(null);
     const [deleteFile, setDeleteFile] = useState<Files | null>(null);
 
+    // Fetch files
     useEffect(() => {
         const fetchFiles = async () => {
             try {
@@ -42,6 +44,7 @@ export function AdminCardFile({
         fetchFiles();
     }, []);
 
+    // Handle delete files
     const handleDelete = async () => {
         if (!deleteFile) return;
 
@@ -58,8 +61,10 @@ export function AdminCardFile({
 
     return (
         <div className="mt-2 flex flex-wrap gap-6">
+            {/* Loading template for when files get fetched from the database */}
             {loading ? (
                 <>
+                    {/* Placeholder  for 2 file cards */}
                     {Array.from({ length: 2 }).map((_, index) => (
                         <div
                             key={index}
@@ -80,18 +85,20 @@ export function AdminCardFile({
                         </div>
                     ))}
 
+                    {/* Placeholder for add card */}
                     <div className="w-[calc(33%-0.75rem)] max-w-2xl animate-pulse rounded-lg bg-white shadow-md">
                         <div className="flex h-full justify-center p-6">
                             <div className="h-30 w-30 rounded-full bg-gray-300" />
                         </div>
                     </div>
                 </>
-            ) : // If files array is empty show this text 
+            ) : // If files array is empty show this text
             files.length === 0 ? (
                 <h1 className="text-center text-3xl font-bold">
                     No files found
                 </h1>
             ) : (
+                // Render a card for each file in the files array
                 <>
                     {files.map((file) => (
                         <div
@@ -113,6 +120,7 @@ export function AdminCardFile({
                                     }
                                 />
 
+                                {/* If the menu is open show the code here below */}
                                 {openMenuId === file.id && (
                                     <div className="absolute top-12 right-0 z-20 w-32 rounded-lg border border-zinc-200 bg-white shadow-lg">
                                         <button

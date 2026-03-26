@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
 
 // Define Project
 type Project = {
@@ -128,7 +128,7 @@ export function AdminCardProject({
             {/* Loading template for when projects get fetched from the database */}
             {loading ? (
                 <>
-                    {/* Placeholder project cards */}
+                    {/* Placeholder  for 3 project cards */}
                     {Array.from({ length: 3 }).map((_, index) => (
                         <div
                             key={index}
@@ -202,6 +202,7 @@ export function AdminCardProject({
                                         }
                                     />
 
+                                    {/* If the menu is open show the code here below */}
                                     {openMenuId === project.id && (
                                         <div className="absolute top-16 right-4 z-20 w-32 rounded-lg border border-zinc-200 bg-white shadow-lg">
                                             <button
@@ -256,6 +257,7 @@ export function AdminCardProject({
                                         {project.description}
                                     </h1>
 
+                                    {/* Text for progress and status above the progress bar */}
                                     <div className="mt-4">
                                         <div className="flex justify-between">
                                             <p className="text-md mb-1 text-zinc-600">
@@ -276,6 +278,7 @@ export function AdminCardProject({
                                             </p>
                                         </div>
 
+                                        {/* Show an bar for progress*/}
                                         <div className="h-4 w-full overflow-hidden rounded-full bg-gray-200">
                                             <div
                                                 className="h-full rounded-full bg-accent transition-all duration-300"

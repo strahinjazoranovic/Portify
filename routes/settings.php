@@ -2,15 +2,17 @@
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\UserProjectController;
-use App\Http\Controllers\UserMessageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Protected API routes
 Route::middleware('auth')->group(function () {
 
+    // Redirect settings to /settings/profile
     Route::redirect('settings', '/settings/profile');
 
     // Route for updating account
@@ -29,7 +31,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/projects/{project}', [UserProjectController::class, 'destroy']);
                 
         // Routes for mesesages
-        Route::get('/messages', [UserMessageController::class, 'index']);
+        Route::post('/chat/send', [MessageController::class, 'sendMessage']);
+        Route::get('/chat/conversations', [MessageController::class, 'getConversations']);
+        Route::get('/chat/messages/{id}', [MessageController::class, 'getMessages']);
+        Route::post('/chat/read/{id}', [MessageController::class, 'markAsRead']);
 
         // Routes for files
         Route::get('/files', [UserFileController::class, 'index']);

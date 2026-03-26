@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('path', 100);
             $table->timestamps(); // created_at and updated_at
+            $table->integer('project_id')->nullable();
+            $table->integer('user_id')->nullable();
         });
     }
 

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id(); // bigint(20) primary key
-            $table->string('name', 100);
-            $table->enum('status', ['Not started', 'In development', 'In testing', 'Finished']);
+            $table->string('name', 100);       
             $table->text('description');
             $table->date('deadline');
-            $table->integer('progress');
-            // $table->integer('user_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps(); // created_at and updated_at
+            $table->integer('progress');
             $table->string('logo', 100)->nullable();
+            $table->enum('status', ['Not started', 'In development', 'In testing', 'Finished']);
         });
     }
 
