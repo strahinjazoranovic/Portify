@@ -49,7 +49,7 @@ export function MessageBubble({ msg }: { msg: ChatMessage }) {
                 {/* Action bar on hover */}
                 {showActions && (
                     <div
-                        className={`absolute -top-8 z-10 flex items-center gap-1 rounded-md border border-zinc-200 bg-white px-0.5 py-0.5 shadow-md ${
+                        className={`absolute -bottom-8 z-10 flex items-center gap-1 rounded-md border border-zinc-200 bg-white px-0.5 py-0.5 shadow-md ${
                             msg.is_sender ? 'right-0' : 'left-0'
                         }`}
                     >
@@ -108,7 +108,7 @@ export function MessageBubble({ msg }: { msg: ChatMessage }) {
                 {/* Quick emoji picker */}
                 {showEmojiPicker && (
                     <div
-                        className={`absolute -top-17 z-20 flex gap-1 rounded-md border border-zinc-200 bg-white px-1 py-0.5 shadow-lg ${
+                        className={`absolute -bottom-17 z-20 flex gap-1 rounded-md border border-zinc-200 bg-white px-1 py-0.5 shadow-lg ${
                             msg.is_sender ? 'right-0' : 'left-0'
                         }`}
                     >
