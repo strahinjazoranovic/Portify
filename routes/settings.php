@@ -30,10 +30,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/projects/{project}', [UserProjectController::class, 'update']);
         Route::delete('/projects/{project}', [UserProjectController::class, 'destroy']);
                 
-        // Routes for mesesages
-        Route::post('/chat/send', [MessageController::class, 'sendMessage']);
+        // Routes for messages
+        Route::get('/chat/users', [MessageController::class, 'getAvailableUsers']);
         Route::get('/chat/conversations', [MessageController::class, 'getConversations']);
         Route::get('/chat/messages/{id}', [MessageController::class, 'getMessages']);
+        Route::post('/chat/start', [MessageController::class, 'startConversation']);
+        Route::post('/chat/send', [MessageController::class, 'sendMessage']);
+        Route::put('/chat/messages/{id}', [MessageController::class, 'editMessage']);
+        Route::delete('/chat/messages/{id}', [MessageController::class, 'deleteMessage']);
+        Route::post('/chat/messages/{id}/react', [MessageController::class, 'toggleReaction']);
         Route::post('/chat/read/{id}', [MessageController::class, 'markAsRead']);
 
         // Routes for files
