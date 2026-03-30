@@ -13,16 +13,18 @@ type Files = {
 export function AdminCardFile({
     onOpenModal,
     onEditFile,
+    refreshKey,
 }: {
     onOpenModal: () => void;
     onEditFile: (file: Files) => void;
+    refreshKey: number;
 }) {
     const [files, setFiles] = useState<Files[]>([]);
     const [loading, setLoading] = useState(true);
     const [openMenuId, setOpenMenuId] = useState<number | null>(null);
     const [deleteFile, setDeleteFile] = useState<Files | null>(null);
 
-    // Fetch files
+    // Fetch files on mount and whenever refreshKey changes
     useEffect(() => {
         const fetchFiles = async () => {
             try {
@@ -42,7 +44,7 @@ export function AdminCardFile({
         };
 
         fetchFiles();
-    }, []);
+    }, [refreshKey]);
 
     // Handle delete files
     const handleDelete = async () => {
@@ -94,7 +96,7 @@ export function AdminCardFile({
                 </>
             ) : // If files array is empty show this text
             files.length === 0 ? (
-                <h1 className="text-center text-3xl font-bold">
+                <h1 className="text-center text-4xl font-bold">
                     No files found
                 </h1>
             ) : (

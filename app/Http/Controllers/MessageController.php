@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Musonza\Chat\Chat;
 use Musonza\Chat\Models\Conversation;
 use Musonza\Chat\Models\Message;
+use App\Models\AppNotification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -98,6 +99,19 @@ class MessageController extends Controller
         }
 
         $message = $msg->send();
+
+        // Notify the other participant about the new message
+        $conversation->load('participants.messageable');
+        foreach ($conversation->getParticipants() as $participant) {
+            if ($participant->id !== $user->id) {
+                AppNotification::notify(
+                    $participant->id,
+                    'message_received',
+                    'Nieuw bericht van ' . $user->name,
+                    Str::limit($request->message, 100)
+                );
+            }
+        }
 
         return response()->json([
             'id' => $message->id,

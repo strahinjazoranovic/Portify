@@ -24,6 +24,14 @@ type Files = {
 export default function Bestanden() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState<Files | null>(null);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const handleModalClose = (open: boolean) => {
+        setIsModalOpen(open);
+        if (!open) {
+            setRefreshKey((k) => k + 1);
+        }
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -38,10 +46,11 @@ export default function Bestanden() {
                         setSelectedFile(file);
                         setIsModalOpen(true);
                     }}
+                    refreshKey={refreshKey}
                 />
                 <AdminModalFileActions
                     open={isModalOpen}
-                    onOpenChange={setIsModalOpen}
+                    onOpenChange={handleModalClose}
                     file={selectedFile}
                 />
             </Background>

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserProjectController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserFileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/files', [UserFileController::class, 'store']);
         Route::put('/files/{file}', [UserFileController::class, 'update']);
         Route::delete('/files/{file}', [UserFileController::class, 'destroy']);
+
+        // Routes for notifications
+        Route::get('/notifications', [NotificationController::class, 'index']);
+        Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+        Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+        Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
 
         // Route for users
         Route::get('/users', [UserController::class, 'index']);

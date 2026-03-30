@@ -64,7 +64,6 @@ export default function FileUpload({
                     ref={inputRef}
                     id="fileUpload"
                     type="file"
-                    accept="image/*"
                     onChange={handleFileChange}
                     className="hidden"
                 />

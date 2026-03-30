@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\AppNotification;
 use App\Models\UserProject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -9,7 +10,15 @@ class UserProjectController extends Controller
 {
     public function index()
     {
-        $projects = UserProject::all();
+        $user = auth()->user();
+
+        // Fetch projects based on user role: Admins can see all projects and users can only see their linked projects
+        $projects = $user->role === 'Admin'
+            // Fetch everything for admin
+            ? UserProject::all()
+            // Fetch everything that has the user_id of the logged in user
+            : UserProject::where('user_id', $user->id)->get();
+
         return response()->json($projects);
     }
 
@@ -36,6 +45,16 @@ class UserProjectController extends Controller
         $validated['progress'] = $validated['progress'] ?? 0;
 
         $project = UserProject::create($validated);
+
+        // Notify the linked user
+        if (!empty($validated['user_id'])) {
+            AppNotification::notify(
+                (int) $validated['user_id'],
+                'project_created',
+                'Nieuw project toegevoegd',
+                "Het project \"{$project->name}\" is aan je toegewezen."
+            );
+        }
     }
 
     // Update projects
@@ -59,12 +78,24 @@ class UserProjectController extends Controller
         }
 
         $project->update($validated);
+
+        // Notify the linked user about the edit
+        if ($project->user_id) {
+            AppNotification::notify(
+                (int) $project->user_id,
+                'project_updated',
+                'Project bijgewerkt',
+                "Het project \"{$project->name}\" is bijgewerkt."
+            );
+        }
     }
 
     // Public function for destroying(deleting) an project
     public function destroy($project)
     {
         $project = UserProject::findOrFail($project);
+        $projectName = $project->name;
+        $userId = $project->user_id;
 
         if ($project->logo) {
             $path = str_replace('/storage/', '', $project->logo);
@@ -72,5 +103,15 @@ class UserProjectController extends Controller
         }
 
         $project->delete();
+
+        // Notify the linked user about the deletion
+        if ($userId) {
+            AppNotification::notify(
+                (int) $userId,
+                'project_deleted',
+                'Project verwijderd',
+                "Het project \"{$projectName}\" is verwijderd."
+            );
+        }
     }
 }

@@ -96,7 +96,7 @@ export function UserCardProject() {
     };
 
     return (
-        <div className="mt-2 flex flex-wrap justify-center gap-6">
+        <div className="mt-2 flex flex-wrap gap-6">
             {/* Loading template for when projects get fetched from the database */}
             {loading ? (
                 Array.from({ length: 4 }).map((_, index) => (
@@ -131,7 +131,7 @@ export function UserCardProject() {
                 ))
             ) : // If projects array is empty show this text
             projects.length === 0 ? ( 
-                <h1 className="text-center text-3xl font-bold">
+                <h1 className="text-center text-4xl font-bold">
                     No projects found
                 </h1>
             ) : (

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\AppNotification;
 use App\Models\UserFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -9,7 +10,15 @@ class UserFileController extends Controller
 {
     public function index()
     {
-        $files = UserFile::all();
+        $user = auth()->user();
+
+        // Fetch projects based on user role: Admins can see all projects and users can only see their linked projects
+        $files = $user->role === 'Admin'
+            // Fetch everything for admin
+            ? UserFile::all()
+            // Fetch everything that has the user_id of the logged in user
+            : UserFile::where('user_id', $user->id)->get();
+
         return response()->json($files);
     }
  
@@ -31,6 +40,16 @@ class UserFileController extends Controller
         }
 
         $file = UserFile::create($validated);
+
+        // Notify the linked user
+        if (!empty($validated['user_id'])) {
+            AppNotification::notify(
+                (int) $validated['user_id'],
+                'file_created',
+                'Nieuw bestand toegevoegd',
+                "Het bestand \"{$file->name}\" is aan je toegewezen."
+            );
+        }
 
         return response()->json($file, 201);
     }
@@ -60,6 +79,16 @@ class UserFileController extends Controller
 
         $file->update($validated);
 
+        // Notify the linked user about the edit
+        if ($file->user_id) {
+            AppNotification::notify(
+                (int) $file->user_id,
+                'file_updated',
+                'Bestand bijgewerkt',
+                "Het bestand \"{$file->name}\" is bijgewerkt."
+            );
+        }
+
         return response()->json($file);
     }
 
@@ -67,6 +96,8 @@ class UserFileController extends Controller
     public function destroy($file)
     {
         $file = UserFile::findOrFail($file);
+        $fileName = $file->name;
+        $userId = $file->user_id;
 
         // Delete stored file if it exists in storage
         if ($file->path) {
@@ -75,6 +106,16 @@ class UserFileController extends Controller
         }
 
         $file->delete();
+
+        // Notify the linked user about the deletion
+        if ($userId) {
+            AppNotification::notify(
+                (int) $userId,
+                'file_deleted',
+                'Bestand verwijderd',
+                "Het bestand \"{$fileName}\" is verwijderd."
+            );
+        }
 
         return response()->json(['message' => 'File deleted successfully']);
     }

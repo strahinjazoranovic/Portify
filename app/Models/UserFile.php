@@ -12,6 +12,6 @@ class UserFile extends Model
         'name',
         'description',
         'user_id',
-        'logo',
+        'path',
     ];
 }
