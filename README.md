@@ -2,7 +2,7 @@
 
 **Project Management Portal**
 
-Portify is a Laravel-based project management portal designed to help teams manage projects, tasks, and workflows efficiently.
+Portify is a Laravel-based project management portal that lets admins manage projects, files, and direct messaging for their clients. Users get a personal dashboard showing only the projects and files assigned to them, with real-time notifications and a built-in chat system.
 
 ---
 
@@ -13,88 +13,61 @@ https://www.figma.com/design/BIfSvF3uxD8ZUQ5rBPCeoa/Portify?t=pqa40VN0TTKI5x5Z-1
 
 ---
 
-# Tech Stack
+## Tech Stack
 
-* **Backend:** Laravel
-* **Frontend:** Vite + npm
+* **Backend:** Laravel 12, PHP 8.2+
+* **Frontend:** React 19, TypeScript, Inertia.js, Tailwind CSS 4, Vite
 * **Database:** MySQL
-* **Package Managers:** Composer (PHP), npm (Node)
+* **Auth:** Laravel Fortify (with 2FA & Google OAuth)
+* **Messaging:** musonza/chat
+* **UI Components:** Radix UI, Lucide icons
+* **Package Managers:** Composer (PHP), npm (Node.js)
 
 ---
 
-# System Requirements
+## System Requirements
 
-Before running the project, make sure you have the following installed:
+Make sure you have the following installed:
 
-## 1. PHP
-
-* **PHP 8.1 or higher** (recommended for modern Laravel versions)
-
-Check your version:
-
-```bash
-php -v
-```
+| Tool | Version | Check |
+|------|---------|-------|
+| PHP | 8.2+ | `php -v` |
+| Composer | 2.x | `composer -V` |
+| Node.js | 18+ | `node -v` |
+| npm | 9+ | `npm -v` |
+| MySQL | 8.0+ | `mysql --version` |
 
 ### Required PHP Extensions
 
-Make sure the following extensions are enabled:
-
-* OpenSSL
-* PDO
-* Mbstring
-* Tokenizer
-* XML
-* Ctype
-* JSON
-* BCMath
-* Fileinfo
-* cURL
+OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, BCMath, Fileinfo, cURL
 
 ---
 
-## 2. Composer (PHP Package Manager)
+## Project Setup
 
-Laravel depends on Composer to manage backend dependencies.
-
-Check if installed:
+### 1. Clone the repository
 
 ```bash
-composer -V
+git clone https://github.com/your-username/Portify.git
+cd Portify
 ```
 
-Download if needed:
-https://getcomposer.org/download/
-
----
-
-## 3. Node.js & npm
-
-* **Node.js v16 or higher recommended**
-* npm (comes with Node.js)
-
-Check with:
+### 2. Install dependencies
 
 ```bash
-node -v
-npm -v
+composer install
+npm install
 ```
 
-Download Node.js:
-https://nodejs.org/en/download/current
+### 3. Configure environment
 
----
+Copy the example env file and fill in your database credentials:
 
-## 4. Database
+```bash
+cp .env.example .env
+```
 
-Install and run one of the following:
-
-* MySQL (recommended)
-* MariaDB
-* PostgreSQL
-* SQLite
-
-Make sure your database server is running and update your `.env` file:
+Update the following in `.env`:
 
 ```env
 DB_CONNECTION=mysql
@@ -105,62 +78,27 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
----
-
-# ⚙️ Project Setup
-
-After cloning the repository:
-
-```bash
-git clone <your-repository-url>
-cd portify
-```
-
----
-
-## 1. Install PHP Dependencies
-
-```bash
-composer install
-```
-
----
-
-## 2. Install JavaScript Dependencies
-
-```bash
-npm install
-```
-
----
-
-## 3. Configure Environment File
-
-Copy the example environment file:
-
-```bash
-cp .env.example .env
-```
-
-Update database credentials inside `.env`.
-
----
-
-## 4. Generate Application Key
+### 4. Generate application key
 
 ```bash
 php artisan key:generate
 ```
 
----
+### 5. Create a storage symlink
 
-## 5. Run Database Migrations
+This makes uploaded files (project logos, documents) accessible from the browser:
+
+```bash
+php artisan storage:link
+```
+
+### 6. Run database migrations
 
 ```bash
 php artisan migrate
 ```
 
-(Optional if the project uses seeders:)
+Optionally seed the database with test data:
 
 ```bash
 php artisan db:seed
@@ -168,33 +106,85 @@ php artisan db:seed
 
 ---
 
-# Running the Project Locally
+## Running the Project
 
-Start the Laravel development server:
+The easiest way to start all services at once:
 
 ```bash
-php artisan serve
+composer dev
 ```
 
-Start the frontend development server:
+This runs the Laravel server, queue worker, and Vite dev server concurrently.
+
+Alternatively, start them separately in different terminals:
 
 ```bash
+# Terminal 1 — Laravel backend
+php artisan serve
+
+# Terminal 2 — Vite frontend
 npm run dev
 ```
 
-The application should now be available at:
+The application will be available at: **http://localhost:8000**
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `composer dev` | Start all dev servers (Laravel + Vite + queue) |
+| `composer setup` | Full setup (install, key, migrate, build) |
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Build frontend for production |
+| `npm run lint` | Run ESLint with auto-fix |
+| `npm run types` | Run TypeScript type checking |
+| `npm run format` | Format code with Prettier |
+| `php artisan test` | Run Pest test suite |
+
+---
+
+## Project Structure
 
 ```
-http://127.0.0.1:8000
+app/
+├── Http/Controllers/       # API & page controllers
+├── Models/                 # Eloquent models
+resources/js/
+├── components/             # Reusable React components
+│   ├── admin/              # Admin-specific components
+│   ├── messages/           # Chat & messaging UI
+│   ├── user/               # User dashboard components
+│   └── ui/                 # Shared UI primitives (Button, Dialog, etc.)
+├── contexts/               # React context providers
+├── layouts/                # Page layout wrappers
+├── pages/                  # Inertia page components
+│   ├── admin/              # Admin pages
+│   ├── auth/               # Authentication pages
+│   └── settings/           # Settings pages
+└── types/                  # TypeScript type definitions
+routes/
+├── web.php                 # Page routes
+└── settings.php            # API & settings routes
 ```
 
 ---
 
-# Development Notes
+## Features
 
-* Ensure your database server is running before starting Laravel.
-* Keep `npm run dev` running while developing frontend changes.
-* Use `.env` for environment-specific configurations.
-* Never commit your `.env` file to version control.
+* **Admin Dashboard** — Create, edit, and delete projects and files, assign them to users
+* **User Dashboard** — View only assigned projects and files with deadline tracking
+* **Messaging** — Direct chat between users with emoji reactions, replies, edit, and delete
+* **Notifications** — Automatic notifications when projects/files are created, updated, or deleted, and when new messages arrive
+* **Authentication** — Login, register, email verification, password reset, two-factor authentication, Google OAuth
+* **File Management** — Upload, download, and manage documents per user
 
 ---
+
+## Development Notes
+
+* Ensure MySQL is running before starting the application.
+* Keep `npm run dev` (or `composer dev`) running while developing — Vite handles hot module replacement.
+* Never commit the `.env` file — it contains secrets.
+* Uploaded files are stored in `storage/app/public/` and served via the `/storage` symlink.
