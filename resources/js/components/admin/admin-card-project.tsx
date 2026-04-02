@@ -124,7 +124,7 @@ export function AdminCardProject({
     };
 
     return (
-        <div className="mt-2 flex flex-wrap justify-center gap-6">
+        <div className="mt-2 flex flex-wrap gap-6">
             {/* Loading template for when projects get fetched from the database */}
             {loading ? (
                 <>
@@ -171,11 +171,26 @@ export function AdminCardProject({
                         </div>
                     </div>
                 </>
-            ) : // If projects array is empty show this text
+            ) : // If projects array is empty show this text with an card so that the admin can add an project
             projects.length === 0 ? (
-                <h1 className="text-center text-4xl font-bold">
-                    No projects found
-                </h1>
+                <div className="flex flex-col items-start justify-start gap-6">
+                    <h1 className="text-center text-3xl font-bold">
+                        No projects found
+                    </h1>
+
+                    <div className="w-md rounded-lg bg-white shadow-md">
+                        <div
+                            className="flex h-full justify-center p-6 transition-transform duration-300 hover:-translate-y-[4px] hover:cursor-pointer"
+                            onClick={onOpenModal}
+                        >
+                            <img
+                                src="/icons/addIcon.svg"
+                                className="h-110"
+                                draggable="false"
+                            />
+                        </div>
+                    </div>
+                </div>
             ) : (
                 // Render a card for each project in the projects array
                 <>

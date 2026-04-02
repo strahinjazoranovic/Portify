@@ -131,7 +131,7 @@ export function UserCardProject() {
                 ))
             ) : // If projects array is empty show this text
             projects.length === 0 ? ( 
-                <h1 className="text-center text-4xl font-bold">
+                <h1 className="text-center text-3xl font-bold">
                     No projects found
                 </h1>
             ) : (

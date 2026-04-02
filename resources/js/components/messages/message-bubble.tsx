@@ -38,14 +38,16 @@ export function MessageBubble({ msg }: { msg: ChatMessage }) {
 
     return (
         <div
-            className={`group flex ${msg.is_sender ? 'justify-end' : 'justify-start'}`}
-            onMouseEnter={() => setShowActions(true)}
-            onMouseLeave={() => {
-                setShowActions(false);
-                setShowEmojiPicker(false);
-            }}
+            className={`flex ${msg.is_sender ? 'justify-end' : 'justify-start'}`}
         >
-            <div className="relative max-w-[75%]">
+            <div
+                className="relative max-w-[75%]"
+                onMouseEnter={() => setShowActions(true)}
+                onMouseLeave={() => {
+                    setShowActions(false);
+                    setShowEmojiPicker(false);
+                }}
+            >
                 {/* Action bar on hover */}
                 {showActions && (
                     <div
@@ -172,7 +174,7 @@ export function MessageBubble({ msg }: { msg: ChatMessage }) {
                                 key={r.emoji}
                                 type="button"
                                 onClick={() => toggleReaction(msg.id, r.emoji)}
-                                className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition ${
+                                className={`inline-flex hover:cursor-pointer items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition ${
                                     r.reacted_by_me
                                         ? 'border-accent bg-accent/10'
                                         : 'border-zinc-200 bg-white hover:bg-zinc-50'

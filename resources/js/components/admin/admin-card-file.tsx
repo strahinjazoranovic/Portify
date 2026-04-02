@@ -96,9 +96,23 @@ export function AdminCardFile({
                 </>
             ) : // If files array is empty show this text
             files.length === 0 ? (
-                <h1 className="text-center text-4xl font-bold">
-                    No files found
-                </h1>
+                 <div className="flex flex-col items-start justify-start gap-6">
+                    <h1 className="text-center text-3xl font-bold">
+                        No files found
+                    </h1>
+                    <div className="w-xl rounded-lg bg-white shadow-md">
+                        <div
+                            className="flex h-full justify-center p-6 transition-transform duration-300 hover:-translate-y-[4px] hover:cursor-pointer"
+                            onClick={onOpenModal}
+                        >
+                            <img
+                                src="/icons/addIcon.svg"
+                                className="h-30 w-30"
+                                draggable="false"
+                            />
+                        </div>
+                    </div>
+                </div>
             ) : (
                 // Render a card for each file in the files array
                 <>

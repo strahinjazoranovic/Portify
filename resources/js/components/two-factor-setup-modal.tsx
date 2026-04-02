@@ -26,7 +26,7 @@ import { Spinner } from './ui/spinner';
 function GridScanIcon() {
     return (
         <div className="mb-3 rounded-full border border-border bg-card p-0.5 shadow-sm">
-            <div className="relative overflow-hidden rounded-full border border-border bg-text p-2.5">
+            <div className="bg-text relative overflow-hidden rounded-full border border-border p-2.5">
                 <div className="absolute inset-0 grid grid-cols-5 opacity-50">
                     {Array.from({ length: 5 }, (_, i) => (
                         <div
@@ -104,14 +104,14 @@ function TwoFactorSetupStep({
                     <div className="relative flex w-full items-center justify-center">
                         <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
                         <span className="relative bg-card px-2 py-1">
-                            or, enter the code manually
+                            of voer de code handmatig in
                         </span>
                     </div>
 
                     <div className="flex w-full space-x-2">
                         <div className="flex w-full items-stretch overflow-hidden rounded-xl border border-border">
                             {!manualSetupKey ? (
-                                <div className="flex h-full w-full items-center justify-center bg-text p-3">
+                                <div className="bg-text flex h-full w-full items-center justify-center p-3">
                                     <Spinner />
                                 </div>
                             ) : (
@@ -120,11 +120,11 @@ function TwoFactorSetupStep({
                                         type="text"
                                         readOnly
                                         value={manualSetupKey}
-                                        className="h-full w-full bg-background p-3 text-foreground outline-none"
+                                        className="h-full w-full bg-background text-white p-3 text-foreground outline-none"
                                     />
                                     <button
                                         onClick={() => copy(manualSetupKey)}
-                                        className="border-l border-border px-3 hover:bg-text"
+                                        className="hover:bg-text border-l border-border px-3"
                                     >
                                         <IconComponent className="w-4" />
                                     </button>
@@ -209,7 +209,7 @@ function TwoFactorVerificationStep({
                                 onClick={onBack}
                                 disabled={processing}
                             >
-                                Back
+                                Terug
                             </Button>
                             <Button
                                 type="submit"
@@ -218,7 +218,7 @@ function TwoFactorVerificationStep({
                                     processing || code.length < OTP_MAX_LENGTH
                                 }
                             >
-                                Confirm
+                                Bevestigen
                             </Button>
                         </div>
                     </div>
@@ -261,27 +261,27 @@ export default function TwoFactorSetupModal({
     }>(() => {
         if (twoFactorEnabled) {
             return {
-                title: 'Two-Factor Authentication Enabled',
+                title: 'Tweestapsverificatie ingeschakeld',
                 description:
-                    'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
-                buttonText: 'Close',
+                    'Tweestapsverificatie is nu ingeschakeld. Scan de QR-code of voer de sleutel in je authenticator-app in.',
+                buttonText: 'Sluiten',
             };
         }
 
         if (showVerificationStep) {
             return {
-                title: 'Verify Authentication Code',
+                title: 'Verifieer authenticatiecode',
                 description:
-                    'Enter the 6-digit code from your authenticator app',
-                buttonText: 'Continue',
+                    'Voer de 6-cijferige code uit je authenticator-app in',
+                buttonText: 'Doorgaan',
             };
         }
 
         return {
-            title: 'Enable Two-Factor Authentication',
+            title: 'Schakel tweestapsverificatie in',
             description:
-                'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
-            buttonText: 'Continue',
+                'Scan de QR-code of voer de sleutel handmatig in om tweestapsverificatie te voltooien',
+            buttonText: 'Doorgaan',
         };
     }, [twoFactorEnabled, showVerificationStep]);
 

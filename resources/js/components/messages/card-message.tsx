@@ -54,7 +54,7 @@ export function UserCardMessage() {
                 ))
             ) : // If there are no messages found show this text
             messages.length === 0 ? (
-                <h1 className="text-center text-xl">No messages</h1>
+                <h1 className="text-center text-3xl">No messages</h1>
             ) : (
                 // For every message that is in the array show this part of the code
                 messages.map((message) => (
